@@ -45,11 +45,16 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="DL\SQDatabase.cs" />
     <Compile Include="DL\SQLite.cs" />
-    <Compile Include="IBusinessEntity.cs" />
+    <Compile Include="DAL\Repository.cs" />
+    <Compile Include="BL\BusinessEntities.cs" />
+    <Compile Include="DL\ITableRow.cs" />
+    <Compile Include="DL\TableRow.cs" />
+    <Compile Include="BL\BusinessEntityManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="DL\About.txt" />
+    <None Include="DAL\About.txt" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -57,5 +62,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
     <Folder Include="DL\" />
+    <Folder Include="DAL\" />
+    <Folder Include="BL\" />
   </ItemGroup>
 </Project>

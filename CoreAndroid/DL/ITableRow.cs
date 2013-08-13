@@ -1,8 +1,8 @@
 using System;
 
-namespace CoreAndroid
+namespace CoreAndroid.DL
 {
-	public interface IBusinessEntity
+	public interface ITableRow
 	{
 		int ID { get; set; }
 		DateTime DateOfCreation { get; set; }
@@ -11,4 +11,3 @@ namespace CoreAndroid
 		int LastUpdatorID { get; set; }
 	}
 }
-

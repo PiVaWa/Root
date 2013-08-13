@@ -23,8 +23,10 @@ namespace CoreAndroid.DL
 		public SQDatabase (string path, int CurrentUserID) : base (path)
 		{
             _CurrentUserID = CurrentUserID;
+
 			// create the tables
-			// CreateTable<Task> ();
+			CreateTable<TaskRow> ();
+			CreateTable<UserRow> ();
         }
 		
         /// <summary>
@@ -33,7 +35,7 @@ namespace CoreAndroid.DL
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns>The item of type T if found or null if not found</returns>
-	    public T GetItemByID<T>(int ID) where T : IBusinessEntity, new()
+	    public T GetItemByID<T>(int ID) where T : ITableRow, new()
         {
             return Table<T>().FirstOrDefault<T>(x => x.ID == ID);
         }
@@ -43,7 +45,7 @@ namespace CoreAndroid.DL
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IList<T> GetAllItems<T>() where T : IBusinessEntity, new()
+        public IList<T> GetAllItems<T>() where T : ITableRow, new()
         {
             return Table<T>().ToList<T>();
         }
@@ -54,7 +56,7 @@ namespace CoreAndroid.DL
         /// <typeparam name="T"></typeparam>
         /// <param name="item"></param>
         /// <returns>ID of the new item</returns>
-        public int AddItem<T>(T item) where T : IBusinessEntity, new()
+        public int AddItem<T>(T item) where T : ITableRow, new()
         {
             item.DateOfCreation = item.DateOfLastUpdate = DateTime.UtcNow;
             item.CreatorID = item.LastUpdatorID = _CurrentUserID;
@@ -67,7 +69,7 @@ namespace CoreAndroid.DL
         /// <typeparam name="T"></typeparam>
         /// <param name="item"></param>
         /// <returns>ID of the item</returns>
-        public int EditItem<T>(T item) where T : IBusinessEntity, new()
+        public int EditItem<T>(T item) where T : ITableRow, new()
         {
             item.DateOfLastUpdate = DateTime.UtcNow;
             item.LastUpdatorID = _CurrentUserID;
@@ -81,7 +83,7 @@ namespace CoreAndroid.DL
         /// <typeparam name="T"></typeparam>
         /// <param name="item"></param>
         /// <returns>Returns the Id of the inserted or updated item</returns>
-        public int AddOrEditItem<T>(T item) where T : IBusinessEntity, new()
+        public int AddOrEditItem<T>(T item) where T : ITableRow, new()
         {
             return item.ID != 0 ? EditItem(item) : AddItem(item);
         }
@@ -91,13 +93,13 @@ namespace CoreAndroid.DL
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
-        public void DeleteItem<T>(int ID) where T : IBusinessEntity, new()
+        public void DeleteItem<T>(int ID) where T : ITableRow, new()
         {
             T item = GetItemByID<T>(ID);
             if (item != null) base.Delete(item);
         }
 
-        public void DeleteAllItems<T>() where T : IBusinessEntity, new()
+        public void DeleteAllItems<T>() where T : ITableRow, new()
         {
             try
             {
@@ -119,7 +121,7 @@ namespace CoreAndroid.DL
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public IList<T> GetItemsCreatedBy<T>(int ID) where T : IBusinessEntity, new()
+        public IList<T> GetItemsCreatedBy<T>(int ID) where T : ITableRow, new()
         {
             return GetAllItems<T>().Where(x => x.CreatorID == ID).ToList();
         }
@@ -130,7 +132,7 @@ namespace CoreAndroid.DL
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        public IList<T> GetItemsLastUpdatedBy<T>(int ID) where T : IBusinessEntity, new()
+        public IList<T> GetItemsLastUpdatedBy<T>(int ID) where T : ITableRow, new()
         {
             return GetAllItems<T>().Where(x => x.LastUpdatorID == ID).ToList();
         }
