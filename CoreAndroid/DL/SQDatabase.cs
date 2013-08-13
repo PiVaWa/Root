@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 namespace CoreAndroid.DL
 {
-
-
 	/// <summary>
 	/// TaskDatabase builds on SQLite.Net and represents a specific database, in our case, the Task DB.
 	/// It contains methods for retreival and persistance as well as db creation, all based on the 
